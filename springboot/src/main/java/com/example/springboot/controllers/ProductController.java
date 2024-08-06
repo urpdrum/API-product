@@ -40,7 +40,8 @@
 
 package com.example.springboot.controllers;
 
-import com.example.springboot.dtos.ProductRecordDto;
+import com.example.springboot.dtos.ProductsRecordDto;
+import com.example.springboot.dtos.ProductsRecordDto;
 import com.example.springboot.models.ProductModel;
 import com.example.springboot.repositories.ProductRepository;
 import jakarta.validation.Valid;
@@ -60,7 +61,7 @@ import java.util.UUID;
 public class ProductController {
 
     @Autowired
-    ProductRepository productRepository;
+ ProductRepository productRepository;
 
     @GetMapping("/products")
     public ResponseEntity<List<ProductModel>> getAllProducts() {
@@ -72,7 +73,7 @@ public class ProductController {
 //
 
     @PostMapping("/products")
-    public ResponseEntity<ProductModel> saveProduct(@RequestBody @Valid ProductRecordDto productRecordDto) {
+    public ResponseEntity<ProductModel> saveProduct(@RequestBody @Valid ProductsRecordDto productRecordDto) {
         var productModel = new ProductModel();
         BeanUtils.copyProperties(productRecordDto, productModel);
         return ResponseEntity.status(HttpStatus.CREATED).body(productRepository.save(productModel));
@@ -89,7 +90,7 @@ public class ProductController {
     }
     @PutMapping("/products/{id}")
     public ResponseEntity<Object> updateProduct(@PathVariable(value="id") UUID id,
-                                                @RequestBody @Valid ProductRecordDto productRecordDto) {
+                                                @RequestBody @Valid ProductsRecordDto productRecordDto) {
         Optional<ProductModel> productO = productRepository.findById(id);
         if(productO.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Product not found.");
